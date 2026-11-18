@@ -1,0 +1,23 @@
+# Quarto
+.quarto/
+_site/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+.virtual_documents/
+anaconda_projects/

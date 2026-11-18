@@ -1,0 +1,94 @@
+---
+title: "Does Study Time Predict Students' Final Mathematics Grades?"
+author: "Kuo Wang"
+date: "2026-11-18"
+abstract: "This study uses linear regression to examine whether study time predicts students' final mathematics grades."
+execute:
+  echo: true
+bibliography: references.bib
+---
+
+## Introduction
+
+
+Academic performance is an important indicator of students' educational success, and the amount of time students spend studying may influence their final grades.
+
+This study uses simple linear regression to examine whether study time predicts final mathematics grades among Portuguese secondary school students.
+
+## Literature Review
+
+Previous research by @cortez2008 examined how student characteristics and educational factors could be used to predict academic performance.
+
+Their study used data from Portuguese secondary school students and explored the role of different factors in predicting final grades, providing a foundation for the regression analysis in this paper.
+
+
+## Method
+
+
+The dataset contains information from 395 Portuguese secondary school students, including their reported study time and final mathematics grades.
+
+A simple linear regression model was fitted using study time as the predictor variable and final mathematics grade (G3) as the outcome variable.
+
+```{python}
+import pandas as pd
+import statsmodels.formula.api as smf
+
+url = "https://raw.githubusercontent.com/MakroMB/student-performance-analysis/main/data/student-mat.csv"
+
+df = pd.read_csv(url, sep=";")
+
+print(df.shape)
+df.head()
+```
+
+
+```{python}
+model = smf.ols("G3 ~ studytime", data=df).fit()
+
+print(model.summary())
+```
+
+
+## Results
+
+The linear regression analysis showed a positive relationship between study time and final mathematics grades (b = `{python} f'{model.params["studytime"]:.3f}'`, SE = `{python} f'{model.bse["studytime"]:.3f}'`, p = `{python} f'{model.pvalues["studytime"]:.3f}'`).
+
+However, this relationship was not statistically significant at the .05 level, and the model explained approximately `{python} f'{model.rsquared * 100:.1f}'`% of the variance in final grades.
+
+
+```{python}
+#| label: fig-regression
+#| fig-cap: "Relationship between study time and final mathematics grades, with a fitted linear regression line and 95% confidence interval."
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.regplot(
+    data=df,
+    x="studytime",
+    y="G3",
+    x_jitter=0.1,
+    scatter_kws={"alpha": 0.3},
+    line_kws={"color": "red"}
+)
+
+plt.xlabel("Study Time")
+plt.ylabel("Final Mathematics Grade")
+plt.title("Linear Regression of Final Grades on Study Time")
+plt.show()
+```
+
+
+## Discussion
+
+The findings suggest that students who report longer study times tend to have slightly higher final mathematics grades, although the relationship was not statistically significant.
+
+Because study time explained only a small proportion of the variance in grades, other factors may play a more important role in predicting academic performance.
+
+
+
+
+
+
+
+
