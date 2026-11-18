@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Does Study Time Predict Students’ Final Mathematics Grades?",
+    "section": "",
+    "text": "Academic performance is an important indicator of students’ educational success, and the amount of time students spend studying may influence their final grades.\nThis study uses simple linear regression to examine whether study time predicts final mathematics grades among Portuguese secondary school students."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Does Study Time Predict Students’ Final Mathematics Grades?",
+    "section": "",
+    "text": "Academic performance is an important indicator of students’ educational success, and the amount of time students spend studying may influence their final grades.\nThis study uses simple linear regression to examine whether study time predicts final mathematics grades among Portuguese secondary school students."
+  },
+  {
+    "objectID": "index.html#literature-review",
+    "href": "index.html#literature-review",
+    "title": "Does Study Time Predict Students’ Final Mathematics Grades?",
+    "section": "Literature Review",
+    "text": "Literature Review\nPrevious research by Cortez and Silva (2008) examined how student characteristics and educational factors could be used to predict academic performance.\nTheir study used data from Portuguese secondary school students and explored the role of different factors in predicting final grades, providing a foundation for the regression analysis in this paper."
+  },
+  {
+    "objectID": "index.html#method",
+    "href": "index.html#method",
+    "title": "Does Study Time Predict Students’ Final Mathematics Grades?",
+    "section": "Method",
+    "text": "Method\nThe dataset contains information from 395 Portuguese secondary school students, including their reported study time and final mathematics grades.\nA simple linear regression model was fitted using study time as the predictor variable and final mathematics grade (G3) as the outcome variable.\n\nimport pandas as pd\nimport statsmodels.formula.api as smf\n\nurl = \"https://raw.githubusercontent.com/MakroMB/student-performance-analysis/main/data/student-mat.csv\"\n\ndf = pd.read_csv(url, sep=\";\")\n\nprint(df.shape)\ndf.head()\n\n(395, 33)\n\n\n\n\n\n\n\n\n\nschool\nsex\nage\naddress\nfamsize\nPstatus\nMedu\nFedu\nMjob\nFjob\n...\nfamrel\nfreetime\ngoout\nDalc\nWalc\nhealth\nabsences\nG1\nG2\nG3\n\n\n\n\n0\nGP\nF\n18\nU\nGT3\nA\n4\n4\nat_home\nteacher\n...\n4\n3\n4\n1\n1\n3\n6\n5\n6\n6\n\n\n1\nGP\nF\n17\nU\nGT3\nT\n1\n1\nat_home\nother\n...\n5\n3\n3\n1\n1\n3\n4\n5\n5\n6\n\n\n2\nGP\nF\n15\nU\nLE3\nT\n1\n1\nat_home\nother\n...\n4\n3\n2\n2\n3\n3\n10\n7\n8\n10\n\n\n3\nGP\nF\n15\nU\nGT3\nT\n4\n2\nhealth\nservices\n...\n3\n2\n2\n1\n1\n5\n2\n15\n14\n15\n\n\n4\nGP\nF\n16\nU\nGT3\nT\n3\n3\nother\nother\n...\n4\n3\n2\n1\n2\n5\n4\n6\n10\n10\n\n\n\n\n5 rows × 33 columns\n\n\n\n\nmodel = smf.ols(\"G3 ~ studytime\", data=df).fit()\n\nprint(model.summary())\n\n                            OLS Regression Results                            \n==============================================================================\nDep. Variable:                     G3   R-squared:                       0.010\nModel:                            OLS   Adj. R-squared:                  0.007\nMethod:                 Least Squares   F-statistic:                     3.797\nDate:                Wed, 18 Nov 2026   Prob (F-statistic):             0.0521\nTime:                        11:36:47   Log-Likelihood:                -1159.3\nNo. Observations:                 395   AIC:                             2323.\nDf Residuals:                     393   BIC:                             2331.\nDf Model:                           1                                         \nCovariance Type:            nonrobust                                         \n==============================================================================\n                 coef    std err          t      P&gt;|t|      [0.025      0.975]\n------------------------------------------------------------------------------\nIntercept      9.3283      0.603     15.463      0.000       8.142      10.514\nstudytime      0.5340      0.274      1.949      0.052      -0.005       1.073\n==============================================================================\nOmnibus:                       33.290   Durbin-Watson:                   2.012\nProb(Omnibus):                  0.000   Jarque-Bera (JB):               39.231\nSkew:                          -0.742   Prob(JB):                     3.03e-09\nKurtosis:                       3.429   Cond. No.                         6.83\n==============================================================================\n\nNotes:\n[1] Standard Errors assume that the covariance matrix of the errors is correctly specified."
+  },
+  {
+    "objectID": "index.html#results",
+    "href": "index.html#results",
+    "title": "Does Study Time Predict Students’ Final Mathematics Grades?",
+    "section": "Results",
+    "text": "Results\nThe linear regression analysis showed a positive relationship between study time and final mathematics grades (b = 0.534, SE = 0.274, p = 0.052).\nHowever, this relationship was not statistically significant at the .05 level, and the model explained approximately 1.0% of the variance in final grades.\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\nsns.regplot(\n    data=df,\n    x=\"studytime\",\n    y=\"G3\",\n    x_jitter=0.1,\n    scatter_kws={\"alpha\": 0.3},\n    line_kws={\"color\": \"red\"}\n)\n\nplt.xlabel(\"Study Time\")\nplt.ylabel(\"Final Mathematics Grade\")\nplt.title(\"Linear Regression of Final Grades on Study Time\")\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Relationship between study time and final mathematics grades, with a fitted linear regression line and 95% confidence interval."
+  },
+  {
+    "objectID": "index.html#discussion",
+    "href": "index.html#discussion",
+    "title": "Does Study Time Predict Students’ Final Mathematics Grades?",
+    "section": "Discussion",
+    "text": "Discussion\nThe findings suggest that students who report longer study times tend to have slightly higher final mathematics grades, although the relationship was not statistically significant.\nBecause study time explained only a small proportion of the variance in grades, other factors may play a more important role in predicting academic performance."
+  }
+]
